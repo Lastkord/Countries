@@ -25,21 +25,17 @@ def map_country_with_cities(country: Country) -> dict:
 async def get_country_by_id(country_id: int):
     country = await get_country_by_pk(country_id=country_id)
     if country:
-        return {
-            "id": country.id,
-            "name": country.name,
-            "cities": [{"id": city.id, "name": city.name} for city in country.cities],
-        }
+        return map_country_with_cities(country)
 
 
 async def get_all_countries():
     countries = await get_all_countries_asy()
-    return [{"id": country.id, "name": country.name} for country in countries]
+    return [map_country(country) for country in countries]
 
 
 async def create_country(payload: CreateCountrySchema) -> dict:
     country = await insert_country(Country(name=payload.name))
-    return {"id": country.id, "name": country.name}
+    return map_country(country)
 
 
 async def delete_country(country_id: int):
@@ -48,4 +44,4 @@ async def delete_country(country_id: int):
 
 async def update_country(payload: CreateCountrySchema, country_id) -> dict:
     country = await put_country(Country(id=country_id, name=payload.name))
-    return {"id": country.id, "name": country.name}
+    return map_country(country)

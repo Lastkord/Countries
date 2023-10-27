@@ -30,7 +30,7 @@ async def update_country(country: Country) -> Country:
 async def get_all_countries_asy() -> list[Country]:
     session = _sessionmaker()
     async with session.begin():
-        query = select(Country)
+        query = select(Country).order_by(Country.id)
         data = await session.scalars(query)
         result = data.unique()
     await session.close()

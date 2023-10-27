@@ -37,7 +37,7 @@ async def insert_city(city: City) -> City:
 async def get_cities() -> list[City]:
     session = _sessionmaker()
     async with session.begin():
-        query = select(City)
+        query = select(City).order_by(City.id)
         data = await session.scalars(query)
         result = data.unique()
     await session.close()
