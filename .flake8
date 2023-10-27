@@ -1,0 +1,15 @@
+[flake8]
+exclude =
+    .github
+    .pytest_cache
+    compose
+    migrations
+    terraform
+    venv
+    .venv
+    tests
+max-line-length = 120
+extend-ignore = E722
+per-file-ignores =
+    __init__.py:F403,F405
+    **/repositories/*.py:F403,F405,E711
